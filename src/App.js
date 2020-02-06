@@ -18,7 +18,7 @@ class App extends Component {
     render(){
         return(
             <div>
-            <Button onClick={this.success}>Success</Button>
+            <Button type="primary" onClick={this.success}>Success</Button>
             <Button onClick={this.error}>Error</Button>
             <Button onClick={this.warning}>Warning</Button>
             </div>

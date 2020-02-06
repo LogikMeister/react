@@ -29,8 +29,8 @@ module.exports = webpackMerge(baseWebpackConfig,{
                 {
                     loader: 'less-loader',
                     options: {
-                        modifyvars:{
-                            'hack': `true; @import "./src/assets/less/modify.less";`,
+                        modifyVars:{
+                            'hack': `true; @import "${path.join(__dirname,'./src/assets/less/modify.less')}";`,
                         },
                         javascriptEnabled: true,
                     },
