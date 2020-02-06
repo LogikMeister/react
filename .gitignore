@@ -1,0 +1,9 @@
+# build
+/dist
+
+# dependencies
+/node_modules
+
+# yarn
+yarn-error.log
+yarn.lock
