@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import App from './App.js'
+import 'antd/dist/antd.min.css';
+
+import App from './App.js';
 
 ReactDom.render(
     <App />,
     document.getElementById('root')
-)
+);

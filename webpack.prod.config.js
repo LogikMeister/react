@@ -14,7 +14,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
     output: {
         filename: 'static/js/[name].[hash].js',
         chunkFilename: 'static/js/[name].[chunkhash].js',
-        path: path.join(__dirname, 'dist')
+        path: path.join(__dirname, 'dist'),
     },
     mode: 'production',
     module: {
@@ -25,7 +25,17 @@ module.exports = webpackMerge(baseWebpackConfig,{
             },
             {
                 test: /\.less$/,
-                use: [MiniCssExtractPlugin.loader,'css-loader','less-loader']
+                use: [MiniCssExtractPlugin.loader,'css-loader',
+                {
+                    loader: 'less-loader',
+                    options: {
+                        modifyvars:{
+                            'hack': `true; @import "./src/assets/less/modify.less";`,
+                        },
+                        javascriptEnabled: true,
+                    },
+                },
+            ]
             },
         ]
     },
