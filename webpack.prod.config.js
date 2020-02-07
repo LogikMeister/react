@@ -4,6 +4,7 @@ const baseWebpackConfig = require('./webpack.base.config');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -43,6 +44,13 @@ module.exports = webpackMerge(baseWebpackConfig,{
         new MiniCssExtractPlugin({filename: 'static/css/[name].[hash].css', chunkFilename: 'static/css/[id].css'}),
         new CleanWebpackPlugin(),
         new BundleAnalyzerPlugin(),
+        new CopyWebpackPlugin([
+            {
+                from: path.join(__dirname, './src/public'),  // 从哪个目录copy
+                to: "static", // copy到那个目录
+                ignore: ['.*']
+            }
+        ]),
         new HtmlWebpackPlugin({
             chunks:['app'],
             template:'./src/index.html',

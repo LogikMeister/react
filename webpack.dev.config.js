@@ -2,12 +2,14 @@ const path =require('path');
 const webpackMerge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.config');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const htmlArr =require("./webpackConfig/htmlConfig");// html配置
 
 module.exports = webpackMerge(baseWebpackConfig,{
     mode: 'development',
     output: {
-        filename: 'static/js/[name].js',
+        filename: 'static/js/[name].[hash].js',
         path: path.join(__dirname, 'dist')
     },
     module: {
@@ -33,6 +35,14 @@ module.exports = webpackMerge(baseWebpackConfig,{
         ]
     },
     plugins:[
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([
+            {
+                from: path.join(__dirname, './src/public'),  // 从哪个目录copy
+                to: "static", // copy到那个目录
+                ignore: ['.*']
+            }
+        ]),
         new HtmlWebpackPlugin({
             chunks:['app'],
             template:'./src/index.html',
