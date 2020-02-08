@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
 import './login.less'
+import {reqLogin, reqRegister} from '@/api/auth.js'
 
 class LoginForm extends Component {
     handleSubmit = e =>{
         e.preventDefault()
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             if(!err){
                 console.log('发送post请求', values)
-            }
+                const response = await reqLogin(values.username, values.password, values.remember)
+                //response相关处理
+            } 
         })
     }
 
