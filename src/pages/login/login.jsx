@@ -1,16 +1,24 @@
 import React, { Component } from 'react'
-import {Form, Icon, Input, Button, Checkbox} from 'antd'
+import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
 import './login.less'
 import {reqLogin, reqRegister} from '@/api/auth.js'
+import memoryUtils from '@/utils/memoryUtils.js'
+import storageUtils from '@/utils/storageUtils'
 
 class LoginForm extends Component {
     handleSubmit = e =>{
         e.preventDefault()
         this.props.form.validateFields(async (err, values) => {
             if(!err){
-                console.log('发送post请求', values)
                 const response = await reqLogin(values.username, values.password, values.remember)
-                //response相关处理
+                const results = response.data
+                if(results.success){
+                    memoryUtils.current_user = results.user
+                    // storageUtils.saveUser(results.user)
+                    this.props.loginSuccessJump()
+                } else{
+                    message.error('用户名或密码错误')
+                }
             } 
         })
     }
@@ -61,6 +69,11 @@ class LoginForm extends Component {
 const WrapLoginForm = Form.create()(LoginForm)
 
 export default  class Login extends Component {
+    changeHistory = () =>{
+        console.log('我要改变地址了')
+        this.props.history.replace('/')
+    }
+    
     render() {
         return (
             <div className="auth">
@@ -68,7 +81,7 @@ export default  class Login extends Component {
                     <div className="title">
                         登陆
                     </div>
-                    <WrapLoginForm/>
+                    <WrapLoginForm loginSuccessJump={this.changeHistory}/>
                 </div>
             </div>
         )
