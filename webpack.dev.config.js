@@ -57,7 +57,8 @@ module.exports = webpackMerge(baseWebpackConfig,{
         port: "8081",
         proxy: {
             // 接口请求代理
-            '/api': 'http://127.0.0.1:8000'
+            context: ['/api', '/auth'],
+            target: 'http://127.0.0.1:8000',
         },
     }
 })

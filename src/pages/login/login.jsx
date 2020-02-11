@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
 import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
+import {Redirect} from 'react-router-dom'
 import './login.less'
 import {reqLogin, reqRegister} from '@/api/auth.js'
-import memoryUtils from '@/utils/memoryUtils.js'
-import storageUtils from '@/utils/storageUtils'
+
 
 class LoginForm extends Component {
     handleSubmit = e =>{
         e.preventDefault()
         this.props.form.validateFields(async (err, values) => {
             if(!err){
-                const response = await reqLogin(values.username, values.password, values.remember)
-                const results = response.data
-                if(results.success){
-                    memoryUtils.current_user = results.user
-                    // storageUtils.saveUser(results.user)
+                const response = await reqLogin(values.username, values.password)
+                if(response.data.success){
+                    localStorage.setItem('refreshToken',response.data.data.refreshToken)
+                    localStorage.setItem('token',response.data.data.token)
                     this.props.loginSuccessJump()
                 } else{
                     message.error('用户名或密码错误')
@@ -24,6 +23,9 @@ class LoginForm extends Component {
     }
 
     render() {
+        if(localStorage.getItem('token')) {
+            return <Redirect to="/" />
+        }
         const {getFieldDecorator} = this.props.form
         return(
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -49,13 +51,6 @@ class LoginForm extends Component {
                     )}
                 </Form.Item>
                 <Form.Item>
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: false,
-                    })(<Checkbox>记住密码</Checkbox>)}
-                    <a className="right" href="">
-                        忘记密码
-                    </a>
                     <Button type="primary" htmlType="submit" block className="login-form-button">
                         登陆
                     </Button>

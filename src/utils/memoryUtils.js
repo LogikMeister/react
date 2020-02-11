@@ -1,3 +1,4 @@
 export default {
-    current_user:{}
+    isRefreshing: false,
+    subscriber: []
 }
