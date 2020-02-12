@@ -4,7 +4,6 @@ import {Redirect, Switch} from 'react-router-dom'
 import './auth.less'
 import {reqLogin, reqRegister} from '@/api/auth.js'
 
-
 class LoginForm extends Component {
     handleSubmit = e =>{
         e.preventDefault()
