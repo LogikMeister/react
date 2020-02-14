@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
-import {Redirect, Switch} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import './auth.less'
 import {reqLogin, reqRegister} from '@/api/auth.js'
+import Navbar from '@/components/navbar/navbar.jsx'
 
 class LoginForm extends Component {
     handleSubmit = e =>{
@@ -13,8 +14,8 @@ class LoginForm extends Component {
                 if(response.data.success){
                     localStorage.setItem('refreshToken',response.data.data.refreshToken)
                     localStorage.setItem('token',response.data.data.token)
-                    this.props.loginSuccessJump
-                } else{
+                    this.props.loginSuccessJump()
+                } else {
                     message.error('用户名或密码错误')
                 }
             } 
@@ -92,13 +93,39 @@ class RegisterForm extends Component {
         }
     }
 
+    validatePasswordConfirm = (rule, value, callback) => {
+        const elem = document.getElementById('password')
+        if(value !== elem.value) {
+            callback('前后密码不一致')
+        } else {
+            callback()
+        }
+    }
+
+    handleSubmit = e => {
+        e.preventDefault()
+        this.props.form.validateFields(async (err, value) => {
+            if(!err) {
+                const response = await reqRegister(value.email, value.username, value.password)
+                if(response.data.success) {
+                    message.success('注册成功')
+                    this.props.toLogin()
+                } else {
+                    const error = [null, '邮箱已经被注册了', '用户名已经被注册了', '邮箱和用户名都被注册了']
+                    message.error(error[response.data.data['error']])
+                }
+            }
+        })
+    }
+
     render() {
         const {getFieldDecorator} = this.props.form
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
                     {getFieldDecorator('email', {
-                        rules: [{validator: this.validateEmail}]
+                        rules: [{validator: this.validateEmail}],
+                        validateTrigger	: 'onSubmit'
                     })(
                         <Input
                         prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -128,6 +155,17 @@ class RegisterForm extends Component {
                     )}
                 </Form.Item>
                 <Form.Item>
+                    {getFieldDecorator('password2', {
+                        rules: [{validator: this.validatePasswordConfirm}]
+                    })(
+                        <Input
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        type="password"
+                        placeholder="请再次输入密码"
+                        />,
+                    )}
+                </Form.Item>
+                <Form.Item>
                     <Button type="primary" htmlType="submit" block className="login-form-button">
                         注册
                     </Button>
@@ -144,7 +182,7 @@ const WrapRegisterForm = Form.create()(RegisterForm)
 export default  class Auth extends Component {
     constructor(props) {
         super(props)
-        this.state = {status: false}
+        this.state = {status: true}
     }
 
     changeHistory = () => {
@@ -174,12 +212,15 @@ export default  class Auth extends Component {
             form = (<WrapRegisterForm toLogin={this.toLogin}/>)
         }
         return (
-            <div className="auth">
-                <div className="authform">
-                    <div className="title">
-                        {title}
+            <div className="main">
+                <Navbar/>
+                <div className="auth">
+                    <div className="authform">
+                        <div className="title">
+                            {title}
+                        </div>
+                        {form}
                     </div>
-                    {form}
                 </div>
             </div>
         )

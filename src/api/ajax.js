@@ -27,7 +27,7 @@ import memoryUtils from '../utils/memoryUtils'
 
 export default function ajax(options) {
     const checkToken = (response) => checkTokenDecorator(options, response)
-    request(options).then((response) => checkToken(response)).then((response) => {
+    return request(options).then((response) => checkToken(response)).then((response) => {
         if(response.status === 1000) {
             localStorage.removeItem('token')
             localStorage.removeItem('refreshToken')
