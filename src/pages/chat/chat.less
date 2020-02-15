@@ -1,7 +1,70 @@
+p {
+    margin: 0;
+}
+
 .content {
-    height: 100%;
+    // height: 100%;
     width: 100%;
     padding: 56px 0;
+    // component Me
+    .user {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 0 5px rgba(14, 14, 14, 0.26);
+        .user-inf {
+            margin-left: 25px;
+            .name {
+                color: #808080 !important;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .signature {
+                color: #bfbfbf;
+                font-size: 14px;
+            }
+            .edit {
+                float: left; 
+                font-size: 20px;
+                padding: 14px 0 14px 12px;
+            }
+        }
+    }
+    .line {
+        border-bottom: 2px dashed #999;
+    }
+    //Component Tochat
+    .message-box:nth-child(1){
+        margin-top: 10px;
+    }
+    .message-box:last-child{
+        margin-bottom: 20px;
+    }
+    .message-box {
+        height: 74px;
+        padding: 0 15px;
+        .avatar {
+            text-align: center;
+        }
+        .message {
+            padding-top: 12px;
+            height: 100%;
+            border-bottom: 1px dashed #999;
+            .name {
+                color: black;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .message-last {
+                color: #504a4a;
+                font-size: 14px;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
 }
 
 .footer {
@@ -12,6 +75,7 @@
     width: 100%;
     bottom: 0;
     .item {
+        color: rgba(0, 0, 0, 0.65) !important;
         padding-top: 6px;
         text-align: center;
         font-weight: 800;

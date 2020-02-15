@@ -200,7 +200,7 @@ export default  class Auth extends Component {
     
     render() {
         if(localStorage.getItem('token')) {
-            return <Redirect to="/" />
+            return <Redirect to="/app" />
         }
         const {status} = this.state
         let form, title

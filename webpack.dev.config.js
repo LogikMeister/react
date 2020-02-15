@@ -9,6 +9,7 @@ const htmlArr =require("./webpackConfig/htmlConfig");// html配置
 module.exports = webpackMerge(baseWebpackConfig,{
     mode: 'development',
     output: {
+        publicPath: "/",
         filename: 'static/js/[name].[hash].js',
         path: path.join(__dirname, 'dist')
     },
@@ -50,6 +51,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
         })
     ].concat(htmlArr),
     devServer: {
+        host: '127.0.0.1',
         historyApiFallback: true, // 当找不到路径的时候，默认加载index.html文件
         hot: true,
         open: true,
