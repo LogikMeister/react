@@ -7,6 +7,7 @@ import LoadableComponent from '@/utils/loadable.js'
 // const Chat = LoadableComponent(()=>import('@/pages/chat/chat.jsx'))
 import Auth from '@/pages/auth/auth.jsx'
 import Chat from '@/pages/chat/chat.jsx'
+import ChatFrame from './pages/chat/chatFrame.jsx'
 
 export default  class App extends Component {
     render(){
@@ -14,6 +15,7 @@ export default  class App extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route exact path='/' component={Auth}></Route>
+                    <Route path="/app/chatto/:room" component={ChatFrame}></Route>
                     <Route path='/app' component={Chat}></Route>
                 </Switch>
             </BrowserRouter>

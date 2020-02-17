@@ -1,0 +1,96 @@
+.send-msg-box {
+    position: fixed !important;
+    bottom: 0;
+    width: 100%;
+    padding: 8px 0 8px 15px;
+    background-color:rgb(240,240,240);
+    border-top: 1px rgb(224,224,224) solid;
+}
+
+.content {
+    width: 100%;
+    padding: 60px 0 0 0;
+}
+
+.my-message {
+    width: 100%;
+    padding: 10px 10px 0 10px;
+    .avatar-left {
+        float: left;
+        text-align: right;
+    }
+    .name-and-bubble-left{
+        padding-left: 8px;
+        float: left;
+        .name {
+            font-size: 10px;
+            text-align: left;
+            padding-left: 8px;
+        }
+        .bubble {
+            margin: 0 auto 0 0;
+            width:fit-content;
+            color: black;
+            position: relative;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: rgb(240,240,240);
+            line-height: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: "Microsoft YaHei", "PingFang SC";
+        }
+        .bubble:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border: 5px solid;
+            position: absolute;
+            top: 15px;
+            left: -10px;
+            border-color: transparent rgb(240,240,240) transparent transparent;
+        }
+    }
+    .avatar-right {
+        float: right;
+        text-align: left;
+    }
+    .name-and-bubble-right {
+        padding-right: 8px;
+        float: right;
+        .name {
+            font-size: 10px;
+            text-align: right;
+            padding-right: 8px;
+        }
+        .bubble {
+            margin: 0 0 0 auto;
+            width:fit-content;
+            color: black;
+            position: relative;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: rgb(240,240,240);
+            line-height: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: "Microsoft YaHei", "PingFang SC";
+        }
+        .bubble:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border: 5px solid;
+            position: absolute;
+            top: 15px;
+            right: -10px;
+            border-color: transparent transparent transparent rgb(240,240,240);
+        }
+    }
+}
+
+.clearfix::after{
+    content: "";
+    display: block;
+    clear: both;
+}

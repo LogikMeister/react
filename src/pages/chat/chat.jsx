@@ -6,8 +6,6 @@ import Navbar from '@/components/navbar/navbar.jsx'
 import './chat.less'
 import avatar from './avatar.jpg'
 
-const { TextArea } = Input
-
 export default class Chat extends Component {
     // constructor(props) {
     //     super(props)
@@ -61,36 +59,46 @@ export default class Chat extends Component {
             //     <div onClick={this.clickQuit}>disconnect</div>
             // </div>
             <div style={{height: '100%', width: '100%'}}>
-                <Navbar/>
+                <Navbar />
                 <div className="content">
                     <Switch>
                         <Route exact path="/app/chatto" component={ChatTo}></Route>
-                        <Route path="/app/chatto/:username" component={ChatFrame}></Route>
                         <Route path="/app/me" component={Me}></Route>
                         <Redirect to="/app/chatto"></Redirect>
                     </Switch>
                 </div>
-                <Row className="footer">
-                    <Link to="/app/chatto">
-                        <Col span={8} className="item">
-                            <Icon type="message" className="icon"/>
-                            <p>聊</p>
-                        </Col>
-                    </Link>
-                    <Link to="/app/circle">
-                        <Col span={8} className="item">
-                            <Icon type="team" className="icon"/>
-                            <p>朋友圈</p>
-                        </Col>
-                    </Link>
-                    <Link to="/app/me">
-                        <Col span={8} className="item">
-                            <Icon type="user" className="icon"/>
-                            <p>我</p>
-                        </Col>
-                    </Link>
-                </Row>
+                <Switch>
+                    <Route exact path="/app/chatto" component={Footer}></Route>
+                    <Route path="/app/me" component={Footer}></Route>
+                </Switch>
             </div>
+        )
+    }
+}
+
+class Footer extends Component {
+    render() {
+        return (
+            <Row className="footer">
+                <Link to="/app/chatto">
+                    <Col span={8} className="item">
+                        <Icon type="message" className="icon"/>
+                        <p>聊</p>
+                    </Col>
+                </Link>
+                <Link to="/app/circle">
+                    <Col span={8} className="item">
+                        <Icon type="team" className="icon"/>
+                        <p>朋友圈</p>
+                    </Col>
+                </Link>
+                <Link to="/app/me">
+                    <Col span={8} className="item">
+                        <Icon type="user" className="icon"/>
+                        <p>我</p>
+                    </Col>
+                </Link>
+            </Row>
         )
     }
 }
@@ -129,29 +137,6 @@ class ChatTo extends Component {
                         </Col>
                     </Row>
                 </Link>
-            </div>
-        )
-    }
-}
-
-class ChatFrame extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            message: ''
-        }
-    }
-
-    messageChange = e => {
-        this.setState({
-            message: e.target.value
-        })
-    }
-
-    render() {
-        return (
-            <div>
-                <TextArea placeholder="Autosize height based on content lines" autoSize onChange={this.messageChange}/>
             </div>
         )
     }
